@@ -113,11 +113,21 @@ double HvyDXBase::CircumradiusFromSchlafliCOSH(int schlafP, int schlafQ)
     
 double HvyDXBase::ApothemFromSchlafli(int schlafliP, int schlafliQ)
 {
-    double cosQ = cos(konst_pi / (double)schlafliQ);
+    //  This is based on the following identity 
+    //  for hyperbolic right triangles: 
+    //  
+    //  cosh(adjacent) = cos(pi/q) / sin(pi/p)
+    //      
 
-    double sinP = sin(konst_pi / (double)schlafliP);
+    double cosPiQ = cos(konst_pi / (double)schlafliQ);
 
-    double apothemHyp = std::acosh(cosQ / sinP); 
+    double sinPiP = sin(konst_pi / (double)schlafliP);
+
+    double apothemHyp = std::acosh(cosPiQ / sinPiP); 
+
+    //  
+    //  Convert from hyperbolic measure to Euclidean measure: 
+    //  
 
     double apothem_Euc = std::tanh(apothemHyp / 2.000); 
 
